@@ -9,7 +9,7 @@ import {
     Stack,
     Tooltip,
     Typography,
-    Avatar,
+    Paper,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import SweetAlertComponent from '../../../components/sweetAlert/sweetAlert';
@@ -34,14 +34,21 @@ export default function Dashboard() {
     };
 
     const columns = [
-       
-        { field: 'name', headerName: 'Name', width: 200 },
+        {
+            field: 'name',
+            headerName: 'Product Name',
+            width: 220,
+            headerAlign: 'center',
+            align: 'center',
+        },
         {
             field: 'price',
             headerName: 'Price',
-            width: 120,
+            width: 130,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => (
-                <Typography fontWeight="bold" color="primary">
+                <Typography fontWeight={600} color="primary">
                     ₹ {params.value}
                 </Typography>
             ),
@@ -49,7 +56,9 @@ export default function Dashboard() {
         {
             field: 'description',
             headerName: 'Description',
-            width: 250,
+            width: 260,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => (
                 <Typography variant="body2" color="text.secondary" noWrap>
                     {params.value}
@@ -60,15 +69,17 @@ export default function Dashboard() {
             field: 'category',
             headerName: 'Category',
             width: 150,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => (
                 <Typography
                     variant="caption"
                     sx={{
-                        backgroundColor: '#E8F5E9',
-                        color: '#388E3C',
+                        backgroundColor: '#e1f5fe',
+                        color: '#0277bd',
                         px: 1.5,
                         py: 0.5,
-                        borderRadius: 10,
+                        borderRadius: 2,
                         fontWeight: 600,
                     }}
                 >
@@ -79,7 +90,9 @@ export default function Dashboard() {
         {
             field: 'actions',
             headerName: 'Actions',
-            width: 180,
+            width: 190,
+            headerAlign: 'center',
+            align: 'center',
             sortable: false,
             renderCell: (params) => (
                 <Stack direction="row" spacing={1}>
@@ -89,12 +102,13 @@ export default function Dashboard() {
                             startIcon={<EditIcon />}
                             size="small"
                             sx={{
-                                background: 'linear-gradient(135deg, #4CAF50, #2E7D32)',
+                                background: 'linear-gradient(45deg, #66bb6a, #388e3c)',
                                 color: '#fff',
                                 textTransform: 'none',
                                 px: 2,
+                                boxShadow: 1,
                                 '&:hover': {
-                                    background: 'linear-gradient(135deg, #2E7D32, #4CAF50)',
+                                    background: 'linear-gradient(45deg, #388e3c, #66bb6a)',
                                 },
                             }}
                         >
@@ -110,12 +124,13 @@ export default function Dashboard() {
                             startIcon={<DeleteIcon />}
                             size="small"
                             sx={{
-                                background: 'linear-gradient(135deg, #FF6F61, #FF4B2B)',
+                                background: 'linear-gradient(45deg, #ef5350, #d32f2f)',
                                 color: '#fff',
                                 textTransform: 'none',
                                 px: 2,
+                                boxShadow: 1,
                                 '&:hover': {
-                                    background: 'linear-gradient(135deg, #FF4B2B, #FF6F61)',
+                                    background: 'linear-gradient(45deg, #d32f2f, #ef5350)',
                                 },
                             }}
                         >
@@ -128,7 +143,7 @@ export default function Dashboard() {
     ];
 
     const rows = userList?.map((item, index) => ({
-        id: index, // required for DataGrid
+        id: index,
         ...item,
     }));
 
@@ -141,10 +156,10 @@ export default function Dashboard() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: '100vh',
-                        background: 'linear-gradient(to bottom, #fff, #f3f4f6)',
+                        background: 'linear-gradient(to right, #e0f7fa, #f1f8e9)',
                     }}
                 >
-                    <CircularProgress size={60} sx={{ color: '#FF6F61' }} />
+                    <CircularProgress size={60} sx={{ color: '#26a69a' }} />
                 </Box>
             ) : (
                 <Fade in timeout={500}>
@@ -153,7 +168,7 @@ export default function Dashboard() {
                             px: { xs: 2, md: 6 },
                             py: { xs: 4, md: 6 },
                             minHeight: '100vh',
-                            background: 'linear-gradient(to bottom, #ffffff, #f5f7fa)',
+                            background: 'linear-gradient(to bottom right, #fafafa, #e0f2f1)',
                         }}
                     >
                         <Typography
@@ -161,12 +176,16 @@ export default function Dashboard() {
                             fontWeight="bold"
                             mb={4}
                             textAlign="center"
-                            sx={{ color: '#333' }}
+                            sx={{
+                                color: '#004d40',
+                                letterSpacing: 1,
+                                textShadow: '1px 1px #cfd8dc',
+                            }}
                         >
                             Product Dashboard
                         </Typography>
 
-                        <Box sx={{ height: 600, width: '100%' }}>
+                        <Paper elevation={4} sx={{ borderRadius: 3, overflow: 'hidden' }}>
                             <DataGrid
                                 rows={rows}
                                 columns={columns}
@@ -174,11 +193,23 @@ export default function Dashboard() {
                                 rowsPerPageOptions={[10, 20, 50]}
                                 sx={{
                                     backgroundColor: '#fff',
-                                    borderRadius: 2,
-                                    boxShadow: 3,
+                                    '& .MuiDataGrid-columnHeaders': {
+                                        backgroundColor: '#e0f2f1',
+                                        fontWeight: 'bold',
+                                        fontSize: '1rem',
+                                        color: '#004d40',
+                                    },
+                                    '& .MuiDataGrid-cell': {
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    },
+                                    '& .MuiDataGrid-cell:hover': {
+                                        backgroundColor: '#f1f8e9',
+                                    },
                                 }}
                             />
-                        </Box>
+                        </Paper>
 
                         {open && (
                             <SweetAlertComponent
@@ -186,7 +217,7 @@ export default function Dashboard() {
                                 confirm={handleDelete}
                                 cancel={() => setOpen(false)}
                                 title="Are you sure?"
-                                subtitle="You will not be able to recover this product!"
+                                subtitle="This action cannot be undone!"
                             />
                         )}
                     </Box>
