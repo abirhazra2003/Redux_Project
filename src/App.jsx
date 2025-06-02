@@ -66,7 +66,6 @@ function App() {
       component: <ProductCreate />
     },
 
-
     {
       path: "/cms/edit/:id",
       component: <Edit />
